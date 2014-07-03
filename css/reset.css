@@ -1,0 +1,81 @@
+@charset "utf-8";
+/*
+ * default style definition
+ */
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 75%;
+	line-height: 1em;
+	font-family: "Malgun Gothic", "Lucida Grande", Tahoma, Verdana, AppleGothic, UnDotum, sans-serif;
+}
+div,ul,ol,li,dl,dt,dd,p,input,textarea,select,h1,h2,h3,h4,em,address,fieldset,form,iframe,object{margin:0;padding:0}
+
+fieldset {
+	border: none;
+}
+p, div, th, td, select, input {
+	color: #333;
+}
+a:link, a:visited {
+	color: #666;
+	text-decoration: none;
+}
+a:active, a:hover {
+	color: #000;
+	text-decoration: none;
+}
+img {
+	border: 0;
+}
+input, 
+textarea {
+	border: 1px solid #ddd;
+	background: #fff;
+	padding: 1px;
+}
+input.type-text:hover, 
+input.type-text:focus, 
+textarea:hover, 
+textarea:focus, 
+select:hover, 
+select:active {
+	background-color: #ffd;
+}
+input, select, textarea {
+	vertical-align: middle;
+	font-size: 1em;
+	color: #333;
+}
+button {
+	border:0 none;
+	background: none;
+	padding: 0; 
+}
+select {
+	font-size: 11px;
+	font-family: Dotum, "돋움", sans-serif;
+}
+h1, h2, h3, h4, h5 {
+	font-size: 100%;
+	line-height: 1em;
+}
+ol, dl, li, dt, dd {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+legend,hr {display:none}
+.hidden, #skip a {
+	position:absolute;
+	left:-10000px;
+	top:auto;
+	width:1px;
+	height:1px;
+	overflow:hidden;
+}
+#skip a:focus {
+	position:static;
+	width:auto;
+	height:auto;
+} 
