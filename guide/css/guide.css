@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+html, body{width: 100%;height: 100%;}
+.guide_wrap{width: 100%;height: 100%;display: flex;flex-wrap: nowrap;}
+.left, .right{height: 100%;padding: 15px;}
+.left{width: 25%;border-right: 1px solid #ddd;box-shadow: .2rem .5rem .5rem #ddd;}
+.right{width: 75%;}
+
+/* menu */
+h1{font-size: 2rem;}
+.guide_memu li{padding: .2rem 0;}
+.guide_memu button, .guide_memu a{font-size: 1.4rem;}
+.guide_memu a{padding: .3rem .3rem .3rem 1rem;position: relative;} /* border: .1rem solid #ddd;border-radius: .3rem; */
+.guide_memu a::before{content: '-';display: inline-block;width: .5rem;height: .5rem;position: absolute;top: 0;left: 0;}

@@ -1,0 +1,6 @@
+.wrap{width: 100%;height: 100%;}
+.section{padding: 0 2rem;}
+header {text-align: center;}
+header .historyback{float: left;width: 4.4rem;height: 4.4rem;background-color: #ddd;}
+header h1{display: inline-block;max-width: 70%;}
+.hidden{display:inline-block;font-size: 1px;width: 1px;height: 1px;text-indent: -9999px;overflow: hidden;}

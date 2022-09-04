@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>callback</title>
+</head>
+<body>
+<div>
+    실행<br>
+    checkCallback(_value, callback01, callback02) 
+</div>
+<div>
+    <p>자주 사용하는 스크립트</p>
+<xmp> 
+    function add(a, b) {
+        return a + b;
+    }
+    
+    function sayResult(value) {
+        console.log(value);
+    }
+    
+    sayResult(add(3, 4));
+</xmp>
+<p>위를 callback 방식으로 변경</p>
+<xmp>
+    function add(a, b, callback) {
+        callback(a + b);
+    }
+    
+    function sayResult(value) {
+        console.log(value);
+    }
+    
+    add(3, 4, sayResult);
+</xmp>
+</div>
+<script>
+    // callback 01
+    function checkCallback(_value, callback_01, callback_02) {
+        _value > 3 ? callback01() : callback02();
+    }
+    function callback01() {
+        console.log('3이상');
+    }
+    function callback02() {
+        console.log('3이하');
+    }
+    // checkCallback(4, callback01, callback02) 
+
+    // callback 02
+    function add(a, b, callback) {
+        callback(a+b);
+    }
+    function sayResult(value){
+        console.log(value);
+    }
+    // add(3,6, sayResult);
+
+    // callback03
+    function introduce(first, last, callback) {
+        full = first + last;
+        callback(full);
+    }
+    introduce('first', 'last', function(full){
+        console.log(full)
+    });
+</script>
+</body>
+</html>
