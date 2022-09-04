@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>popup</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+    <script src="../js/jquery_3.6.0.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <h1>국민은행</h1>
+    <p>국민스타뱅킹 로그인 전 메인 사용의 예</p>
+
+    <hr>
+    <h1>사용 예 1</h1>
+    <p>comma 숫자</p>
+    <div class="count_num"></div>
+    <p>point 숫자</p>
+    <div class="count_num2"> </div>
+
+    <hr>
+    <h1>사용 예 2</h1>
+    <div id="countTest1"></div>
+    <div id="countTest2"></div>
+
+    <hr>
+    <h1>사용 예 3 - kb 국민은행</h1>
+    <div id="kospi">00000</div>
+    <div id="kosdaq">00000</div>
+
+    <hr>
+    <h1>사용 예 4</h1>
+    <p>http://bfintal.github.io/Counter-Up/demo/demo.html</p>
+    <p>라이브러리 사용의 예</p>
+</div>
+
+<script>
+let numValut = 1500;
+$({ val : 0 }).animate({ val : numValut }, {
+  duration: 1500,
+  step: function() {
+    var num = numberWithCommas(Math.floor(this.val));
+    $(".count_num").text(num);
+  },
+  complete: function() {
+    var num = numberWithCommas(Math.floor(this.val));
+    $(".count_num").text(num);
+  }
+});
+let numValut2 = 1.5;
+$({ val : 0 }).animate({ val : numValut2 }, {
+  duration: 1000,
+  step: function() {
+    var num = numberWithCommas(this.val.toFixed(1));
+    $(".count_num2").text(num);
+  },
+  complete: function() {
+    var num = numberWithCommas(this.val.toFixed(1));
+    $(".count_num2").text(num);
+  }
+});
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// 두번째
+
+new RollingNum('countTest1','12340');
+new RollingNum('countTest2','12340','slide');
+
+
+function RollingNum(id, number, type) {
+  var $cntBox = document.getElementById(id);
+  var $cntNum = number;
+  var $cntLen = $cntNum.length;
+  var $numArr=$cntNum.split('');
+  var delay = 300;
+  var speed = 100;
+  
+  
+  // 카운트
+  for ( var i=0; i<$cntLen; i++){
+    var bckI = ($cntLen - i*1) -1;
+    var num = document.createElement('span');
+    num.classList.add('num', 'idx'+bckI);
+    num.setAttribute('data-num',$numArr[i]);
+    
+    $cntBox.append(num);
+    setNum (num, i);
+  }
+  //,처리
+  if ($cntLen>3) {
+    for (var i=1; i<=Math.floor($cntLen/3); i++) {
+      var idx3n = $cntBox.querySelector('.idx'+i*3);
+      var pointEl = document.createElement('span');
+      pointEl.classList.add('point');
+      idx3n.after(pointEl);
+    }
+    setTimeout(function(){
+      var point = $cntBox.querySelectorAll('.point');
+      point.forEach(el => {
+        el.innerText=','
+      });
+    },(speed*10) + ($cntLen * delay) + speed);
+  };
+
+  function setNum (el, n){
+    if (type == 'slide') {
+      setTimeout(function(){
+        var no=0;
+        var numHeight = 30;
+        // style 추가
+        var style = document.createElement('style');
+        style.innerHTML=
+          ".num, .point {display: inline-block;vertical-align: middle;}\
+          .num {overflow: hidden;}\
+          .numList {display: inline-block;margin-top:0;text-align: center;transition: all "+(speed/1000)+"s;}"
+        document.body.appendChild(style);
+
+        var numbersDiv = document.createElement('span');
+        var numbers = '0\n1\n2\n3\n4\n5\n6\n7\n8\n9';
+        el.style='height:'+numHeight+'px;line-height:'+numHeight+'px;';
+        numbersDiv.classList.add('numList');
+        numbersDiv.innerText = numbers;
+        el.append(numbersDiv);
+
+        var intervalNo = setInterval(function(){
+          no++;
+          numbersDiv.style='margin-top:'+(no * numHeight * -1)+'px;';
+          if(no == 10) {
+            clearInterval(intervalNo);
+            numbersDiv.style='margin-top:'+(el.getAttribute('data-num') * numHeight * -1)+'px';
+          }
+        },speed);
+      }, delay*i);
+    }else {
+      setTimeout(function(){
+        var no=0;
+        var intervalNo = setInterval(function(){
+          el.innerText = no++;
+          if(no == 10) {
+            clearInterval(intervalNo);
+            el.innerText = el.getAttribute('data-num');
+          }
+        },speed);
+      }, delay*i);
+    }
+  }
+}
+
+// 세번째
+const numberCountAni =  function () {
+  function numberCounter(target_frame, target_number, min, max, limit) {
+    this.count = 0;
+    this.diff = 0;
+    this.target_number = target_number;
+    this.target_frame = document.getElementById(target_frame);
+    this.timer = null;
+    this.min = min;
+    this.max = max;
+    this.limit =limit;
+    this.counter();
+  };
+  numberCounter.prototype.counter = function() {
+    var self = this;
+    var randomStr = this.count.toString();
+    self.count = Math.random() * (parseInt(this.max) - parseInt(this.min)) + parseInt(this.min);
+    this.target_frame.innerHTML = [randomStr.slice(0, this.limit).replace(/\B(?=(\d{3})+(?!\d))/g, ','), '.', randomStr.slice(3, 5)].join('');
+    this.count < Math.cell(this.target_number) ? this.timer = setTimeout(function(){self.counter();}, 80) : clearTimeout(this.timer);
+  }
+  new numberCounter('kospi', '304483', '100000', '300000', 4);
+  new numberCounter('kosdaq', '204403', '10000', '70000', 3);
+}
+numberCountAni();
+</script>
+</body>
+</html>

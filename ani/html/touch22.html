@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>popup</title>
+    <link rel="stylesheet" href="/ani/css/reset.css">
+    <!-- <script src="/js/jquery_3.6.0.js"></script> -->
+    <script src="/ani/js/jquery_3.6.0.js"></script>
+    <style>
+html, body{height: 100%;}
+.carusel{position:relative; width:100%; height:100%;background-color: antiquewhite; overflow: hidden;}
+
+.carusel .carusel_wrap{position: relative;width: 100%;height: 100%;z-index: 1;display: flex;box-sizing: content-box;transition-property: transform;transition-duration: 300ms;}
+.carusel .carusel_wrap .carusel_slide{background-color: aqua;display: flex;flex-shrink: 0;width: 200px;text-align: center;border: 1px solid #ddd;}
+    </style>
+</head>
+<body>
+    <div>
+        transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);
+    </div>
+<div class="carusel">
+    <div class="carusel_wrap">
+    <div class="carusel_slide">carusel_slide 01</div>
+    <div class="carusel_slide">carusel_slide 02</div>
+    <div class="carusel_slide">carusel_slide 03</div>
+    </div>
+</div>
+<p>
+    01 start 시점 move<br>
+
+</p>
+<script>
+const caruselMove = {
+    wrapWidth : $('.carusel').eq(0).outerWidth(true),
+    itemCount : $('.carusel div.carusel_slide').length,
+    count : 0,
+    wrapX : 0,
+    startX : null, 
+    startY : null, 
+    moveX : null, 
+    moveY : null, 
+    endX : null, 
+    endY : null,
+    touchMove : function(_moveX) {
+        // console.log(caruselMove.itemCount);
+        // console.log(_moveX);
+        console.log(caruselMove.wrapX)
+        // var matrix = $('.carusel_wrap').css('transform').replace(/[^0-9\-.,]/g, '').split(',');
+        //     caruselMove.wrapX = matrix[12] || matrix[4];
+        $('.carusel_wrap').css({'transform': 'translate3d('+_moveX+'px, 0px, 0px'});
+    },
+    touchEnd : function() {
+        // console.log(caruselMove.startX + ' : ' + caruselMove.endX);
+        console.log(caruselMove.startX - caruselMove.endX);
+        // if(!(caruselMove.startX - caruselMove.endX) > 60) {
+        //     caruselMove.count++;
+        //     $('.carusel_wrap').css({'transform': 'translate3d('+ '-' +(caruselMove.count * 200)+'px, 0px, 0px'});
+        // } else if((caruselMove.startX - caruselMove.endX) < -60) {
+        //     caruselMove.count--;
+        //     $('.carusel_wrap').css({'transform': 'translate3d('+ (caruselMove.count * 200)+'px, 0px, 0px'});
+        // }
+        if(!(caruselMove.startX - caruselMove.endX) > 40) {
+            $('.carusel_wrap').css({'transform': 'translate3d('+0+'px, 0px, 0px'});
+        } else {
+            if(caruselMove.count < caruselMove.itemCount){
+                caruselMove.count++;
+            }
+            $('.carusel_wrap').css({'transform': 'translate3d('+ '-' +(caruselMove.count * 200)+'px, 0px, 0px'});
+            console.log(caruselMove.count)
+        }
+    },
+    init: function() {
+        // console.log(caruselMove.wrapWidth);
+        // console.log(_moveX);
+        $(".carusel").on('touchstart',function(event){
+            caruselMove.startX = event.originalEvent.changedTouches[0].screenX;
+            caruselMove.startY = event.originalEvent.changedTouches[0].screenY;
+        });
+        $(".carusel").on("touchmove", function(event){
+            
+            // caruselMove.wrapX = $('.carusel_wrap').
+            // 이동 좌표값 확인
+            caruselMove.moveX = event.originalEvent.changedTouches[0].screenX;
+            caruselMove.moveY = event.originalEvent.changedTouches[0].screenY;
+            caruselMove.touchMove(caruselMove.moveX-caruselMove.startX);
+        });
+        $(".carusel").on('touchend',function(event){
+            caruselMove.endX = event.originalEvent.changedTouches[0].screenX;
+            caruselMove.endX = event.originalEvent.changedTouches[0].screenY;
+            caruselMove.touchEnd();
+        });
+        // $('.carusel_wrap').css({'transform': 'translate3d('+_moveX+'px, 0px, 0px'});
+    }
+}
+caruselMove.init();
+// var startX, startY, moveX, moveY, endX, endY;
+// $(".carusel").on('touchstart',function(event){
+//     startX = event.originalEvent.changedTouches[0].screenX;
+//     startY = event.originalEvent.changedTouches[0].screenY;
+// });
+// $(".carusel").on("touchmove", function(event){
+    
+//     // 이동 좌표값 확인
+//     moveX = event.originalEvent.changedTouches[0].screenX;
+//     moveY = event.originalEvent.changedTouches[0].screenY;
+//     caruselMove.init(moveX-startX);
+// });
+
+      </script>
+</body>
+</html>

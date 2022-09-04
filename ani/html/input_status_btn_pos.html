@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>input status keypad 시 button position</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <script src="../js/jquery_3.6.0.js"></script>
+    <style>
+html, body{width: 100%;height: 100%;}
+.wrap{padding-bottom: 50px;position: relative;}
+label{display: block;margin-top: 1rem;}
+.input_aria {padding: 2rem;}
+input[type="email"]{width: 100%;}
+.btnFooterFixed {position: fixed;width: 100%;bottom: 0;left: 0;right: 0;}
+.wrap.non_fixed .btnFooterFixed {position: absolute;}
+.btnFooterFixed button{display:block;padding: 1rem .8rem;background-color: blueviolet;width: 100%;color: white;}
+textarea{width: 100%;}
+.popup{position: fixed;width: 100%;height: 50%;bottom: -50%;left: 0;right: 0;z-index: 1000;background-color: bisque;}
+.popup.-fixed{bottom: 0;}
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <h1>input type별</h1>
+    <div class="input_aria">
+        <h2>checkbox</h2>
+        <label for="check01">check01</label>
+        <input type="checkbox" name="checkbox" id="check01">
+    
+        <!-- <h2> checkbox readonly </h2> -->
+        <label for="check02">check02 readonly</label>
+        <input type="checkbox" name="checkbox" id="check02" readonly>
+    
+        <!-- <h2>checkbox disabled  </h2> -->
+        <label for="check03">check03 disabled</label>
+        <input type="checkbox" name="checkbox" id="check03" disabled>
+    </div>
+    <div class="input_aria">
+        <h2> email </h2>
+        <label for="email01">email</label>
+        <input type="email" name="email" id="email01">
+    
+        <!-- <h2> email readonly </h2> -->
+        <label for="email02">email readonly</label>
+        <input type="email" name="email" id="email02" readonly>
+    
+        <!-- <h2> email disabled </h2> -->
+        <label for="email03">email disabled</label>
+        <input type="email" name="email" id="email03" disabled>
+    </div>
+    <div class="input_aria">
+        <h2> number </h2>
+        <label for="num01">number</label>
+        <input type="number" name="number" id="num01">
+    
+        <!-- <h2> number readonly </h2> -->
+        <label for="num02">number readonly</label>
+        <input type="number" name="number" id="num02" readonly>
+    
+        <!-- <h2> number disabled </h2> -->
+        <label for="num03">number disabled</label>
+        <input type="number" name="number" id="num03" disabled>
+    </div>
+
+    <div class="input_aria">
+        <p> ppppppppp<br</p>
+        <div role="button" class="btn layer">
+            <input type="text" name="" title="출금액" aria-hidden="true" readonly>
+        </div>
+    </div>
+
+    <div class="input_aria">
+        <h2> password </h2>
+        <label for="pass01">password</label>
+        <input type="password" name="password" id="pass01">
+    
+        <!-- <h2> password readonly </h2> -->
+        <label for="pass02">password readonly</label>
+        <input type="password" name="password" id="pass02" readonly>
+    
+        <!-- <h2> password disabled </h2> -->
+        <label for="pass03">password disabled</label>
+        <input type="password" name="password" id="pass03" disabled>
+    </div>
+    <div class="input_aria">
+        <h2> search </h2>
+        <label for="sear01">search</label>
+        <input type="search" name="search" id="sear01">
+        <!-- <h2> search readonly </h2> -->
+        <label for="sear02">search readonly</label>
+        <input type="search" name="search" id="sear02" readonly>
+        <!-- <h2> search disabled </h2> -->
+        <label for="sear03">search disabled</label>
+        <input type="search" name="search" id="sear03" disabled>
+    </div>
+    <div class="input_aria">
+        <h2> tel </h2>
+        <label for="tel01">tel</label>
+        <input type="tel" name="tel" id="tel01">
+        <label for="tel02">tel readonly</label>
+        <input type="tel" name="tel" id="tel02" readonly>
+        <label for="tel03">tel disabled</label>
+        <input type="tel" name="tel" id="tel03" disabled>
+    </div>
+    <div class="input_aria">
+        <h2> text </h2>
+        <label for="text01">tel</label>
+        <input type="text" name="text" id="text01">
+        <label for="text02">text readonly</label>
+        <input type="text" name="text" id="text02" readonly>
+        <label for="text03">text disabled</label>
+        <input type="text" name="text" id="text03" disabled>
+    </div>
+    <div class="input_aria">
+        <h2> textarea </h2>
+        <label for="textarea1">textarea</label>
+        <textarea id="textarea1"></textarea>
+        <!-- <h2> tel readonly</h2> -->
+        <label for="textarea2">textarea readonly</label>
+        <textarea id="textarea2" readonly></textarea>
+        <!-- <h2> tel disabled </h2> -->
+        <label for="textarea3">textarea disabled</label>
+        <textarea id="textarea3" disabled></textarea>
+    </div>
+    <div class="btnFooterFixed">
+        <button type="button">확인</button>
+    </div>
+    <div class="popup bottom">
+        <div class="pop_contents">
+            <p> popup contents </p>
+            <button type="button" class="close">확인</button>
+        </div>
+    </div>
+</div>
+<script>
+const popCall = {
+    btnPop: $('.btn.layer'),
+    btnClose: $('.close'),
+    popClose: function() {
+        popCall.btnClose.on('click', function() {
+            $('.popup').removeClass('-fixed');
+            inputCall.fixedStatusBlur();
+        })
+    },
+    popCheck: function() {
+        popCall.btnPop.on('click', function(e) {
+            e.preventDefault();
+            // console.log('click')
+            $('.popup').addClass('-fixed');
+            inputCall.fixedStatusFocus();
+        });
+    }
+}
+popCall.popCheck();
+const inputCall = {
+    inputItem: $('input[type="email"]:not([readonly]), input[type="number"]:not([readonly]), input[type="password"]:not([readonly]), input[type="search"]:not([readonly]), input[type="tel"]:not([readonly]), input[type="text"]:not([readonly]), textarea:not([readonly])'),
+    fixedStatusFocus: function(){
+        // if(!$('.wrap').hasClass('non_fixed')){
+            $('.wrap').addClass('non_fixed')
+        // }
+    },
+    fixedStatusBlur: function() {
+        // if($('.wrap').hasClass('non_fixed')){
+            $('.wrap').removeClass('non_fixed')
+        // }
+    },
+    inputCheck: function() {
+        console.log(inputCall.inputItem.length);
+        inputCall.inputItem.each(function(index, item){
+            $(this).on('focus', function() {
+                $(this)
+                $(this).css('border','2px solid red');
+                // $('.wrap').addClass('non_fixed');
+                inputCall.fixedStatusFocus();
+            });
+            $(this).on('blur', function() {
+                $(this).css('border','2px solid red');
+                // $('.wrap').removeClass('non_fixed');
+                inputCall.fixedStatusBlur();
+            });
+        });
+
+    }
+}
+inputCall.inputCheck();
+</script>
+</body>
+</html>
