@@ -1,4 +1,4 @@
-git-blog
+na.github.io
 ========
 
 mama blog
